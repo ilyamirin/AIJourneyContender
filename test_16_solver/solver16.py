@@ -158,11 +158,15 @@ class Solver(object):
         return res
 
 
+TASK_NUM = 15
 obj = Solver()
 
 for i in range(10):
+    print("###############" + str(i))
     data = json.load(codecs.open('test_0' + str(i) + '.json', 'r', 'utf-8'))
-    inp = data["tasks"][15]
-    ans = data["tasks"][15]['solution']
+    inp = data["tasks"][TASK_NUM]
+    ans = data["tasks"][TASK_NUM]['solution']
+    print(inp['text'])
+    print(inp["question"]['choices'])
     print(ans)
     print(obj.predict_from_model(inp))

@@ -14,8 +14,6 @@ import json
 import random
 from summa.summarizer import summarize
 from keras_bert import extract_embeddings
-from semantic_text_similarity.models import WebBertSimilarity
-from semantic_text_similarity.models import ClinicalBertSimilarity
 import sys
 import codecs
 import numpy as np
@@ -81,7 +79,10 @@ class Solver(object):
 		text = self.kill_trash(text)
 		text_full = text
 		text1 = text
-		text2 = summarize(text, language='russian', ratio=0.07)
+		if (len(text) > 500):
+			text2 = summarize(text, language='russian', ratio=0.07)
+		else:
+			text2 = text
 		#print(text2)
 
 		sentence_1 = text2
@@ -98,10 +99,12 @@ class Solver(object):
 			all_text += line
 		texts = all_text.split("****")
 		texts_new = new_all_text.split("****")
-
 		ind = 0
 		best = 0
+		cnt = 0
 		for text, new_text in zip(texts, texts_new):
+			cnt += 1
+			print(str(cnt) + "%")
 			text = text.strip('\n')
 			text = text.strip(' ')
 			new_text = new_text.strip('\n')
@@ -166,9 +169,16 @@ class Solver(object):
 TASK_NUM = 26
 obj = Solver()
 
-for i in range(10):
-    data = json.load(codecs.open('test_0' + str(i) + '.json', 'r', 'utf-8'))
-    inp = data["tasks"][TASK_NUM]
-    ans = data["tasks"][TASK_NUM]['solution']
-    print(ans)
-    print(obj.predict_from_model(inp))
+#for i in range(1, 6):
+#	data = json.load(codecs.open('test_0' + str(i) + '.json', 'r', 'utf-8'))
+#	inp = data["tasks"][TASK_NUM]
+#	print(inp)
+#	print("########GENERATED TEXT########")
+#	print(obj.predict_from_model(inp))
+
+data = json.load(codecs.open('test_any_text' + '.json', 'r', 'utf-8'))
+inp = data["tasks"][TASK_NUM]
+print(inp)
+print(inp)
+print("########GENERATED TEXT########")
+print(obj.predict_from_model(inp))

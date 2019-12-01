@@ -8,7 +8,7 @@ from string import punctuation
 
 class Solver(object):
 
-    def __init__(self, seed=42, data_path='data/'):
+    def __init__(self, seed=42, data_path='../data/'):
         self.is_train_task = False
         self.seed = seed
         self.init_seed()
@@ -46,10 +46,10 @@ class Solver(object):
     def fit(self, tasks):
         pass
 
-    def load(self, path="data/models/solver4.pkl"):
+    def load(self, path="../data/models/solver4.pkl"):
         pass
 
-    def save(self, path="data/models/solver4.pkl"):
+    def save(self, path="../data/models/solver4.pkl"):
         pass
 
     def predict_from_model(self, task):
@@ -125,9 +125,14 @@ class Solver(object):
             final_word = word
         return final_word
 
+TASK_NUM = 3
+obj = Solver()
+
 for i in range(10):
-    print(i)
+    print("###############" + str(i))
     data = json.load(codecs.open('test_0' + str(i) + '.json', 'r', 'utf-8'))
-    inp = data["tasks"][3]
-    obj = Solver()
+    inp = data["tasks"][TASK_NUM]
+    ans = data["tasks"][TASK_NUM]['solution']
+    print(inp['text'])
+    print(ans)
     print(obj.predict_from_model(inp))

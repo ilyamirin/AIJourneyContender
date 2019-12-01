@@ -159,12 +159,15 @@ class Solver(object):
             ID_prob = sorted(ID_prob, key = lambda x: x[0], reverse=True)
             return ID_prob[0][1][0].lower()
 
+
 TASK_NUM = 1
 obj = Solver()
 
 for i in range(10):
+    print("###############" + str(i))
     data = json.load(codecs.open('test_0' + str(i) + '.json', 'r', 'utf-8'))
     inp = data["tasks"][TASK_NUM]
     ans = data["tasks"][TASK_NUM]['solution']
+    print(inp['text'])
     print(ans)
     print(obj.predict_from_model(inp))
